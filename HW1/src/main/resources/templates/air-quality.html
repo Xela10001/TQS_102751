@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Air Quality</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://kit.fontawesome.com/90925dc0b7.js" crossorigin="anonymous"></script>
+
+  <style>
+    .gradient-custom-3 {
+      background: #f5f8f5;
+    }
+  </style>
+</head>
+<body>
+<section class="vh-100 bg-image">
+  <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+    <div class="container h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+          <div class="card" style="border-radius: 15px;">
+            <div class="card-body p-5">
+              <h2 class="text-black" th:text="${'Air Quality for ' + request.city + ' ' + day}"></h2>
+              <br/>
+              <h5 class="text-dark" th:text="${'Carbon Monoxide: ' + request.airQuality.co + ' μg/m3'}"></h5>
+              <h5 class="text-dark" th:text="${'Ozone: ' + request.airQuality.o3 + ' μg/m3'}"></h5>
+              <h5 class="text-dark" th:text="${'Nitrogen dioxide: ' + request.airQuality.no2 + ' μg/m3'}"></h5>
+              <h5 class="text-dark" th:text="${'Sulphur dioxide: ' + request.airQuality.so2 + ' μg/m3'}"></h5>
+              <h5 class="text-dark" th:text="${'PM2.5: ' + request.airQuality.pm2_5 + ' μg/m3'}"></h5>
+              <h5 class="text-dark" th:text="${'PM10: ' + request.airQuality.pm10 + ' μg/m3'}"></h5>
+              <h5 class="text-dark" th:text="${'US - EPA Index: ' + request.airQuality.us_epa_index}"></h5>
+              <h5 class="text-dark" th:text="${'UK Defra Index: ' + request.airQuality.gb_defra_index}"></h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>
