@@ -1,0 +1,40 @@
+docker run --name MySqlHealthManager -e MYSQL_ROOT_PASSWORD=rootPw123 -e MYSQL_DATABASE=HealthManager -e MYSQL_USER=user1 -e MYSQL_PASSWORD=user1pw -p 33060:3306 -d mysql/mysql-server:5.7
+
+mysql -u root -p
+
+mvn clean package -DskipTests
+
+Remove docker images in CMD:
+for /F %i in ('docker images -a -q') do docker rmi -f %i
+
+Remove everything docker container related:
+docker system prune
+docker system prune -a
+docker system prune -a --volumes
+
+https://www.ua.pt/pt/stic/teletrabalho_vpn (Linux method 1 worked for me -Ricardo)
+Start VPN:
+$ snx -s go.ua.pt -u user@ua.pt
+Stop VPN:
+$ snx -d
+
+Connect to VM:
+$ ssh  ies@deti-ies-02.ua.pt
+Password VM: nJ21s5AA
+
+$ export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+$ source /etc/profile.d/maven.sh
+
+/home/IES_Project
+
+To access MySql terminal:
+$ docker exec -it MySqlHealthManager "bash" 
+
+192.168.160.223:8080/patients
+10.139.0.1:8080/patients    
+10.139.0.255
+
+Disable auto time sync:
+$ timedatectl set-ntp 0
+
+$ timedatectl set-time "2023-01-01 12:00:00"

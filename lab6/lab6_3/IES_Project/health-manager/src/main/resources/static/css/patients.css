@@ -1,0 +1,82 @@
+body {
+    padding-top: 50px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.btn {
+    white-space: normal !important;
+}
+
+td
+{
+    vertical-align: middle !important; 
+}
+
+.row {
+   display: flex;
+   flex-wrap: wrap;
+}
+
+.row > div[class*='col-'] {
+  display: flex;
+}
+
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.card-text i {
+    text-align: center;
+    width: 20px;
+}
+
+.card-text span span {
+    padding-left: 3px;
+}
+
+.card .card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.patient-buttons {
+    margin-top: auto!important;
+}

@@ -1,0 +1,136 @@
+﻿body {
+    padding-top: 50px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+/* NEW */
+
+/*******************
+Text Colors
+*******************/
+
+#piehealth .ct-label {
+    font-size: 16px;
+    fill: white !important;
+    font-family: Roboto, sans-serif;
+}
+
+#linehealth span.ct-horizontal:last-of-type {
+    width: max-content!important;
+}
+
+.text-white {
+    color: #ffffff !important;
+}
+
+.text-dull {
+    color: #eceff1 !important;
+}
+
+.text-critical {
+    color: #FF4848 !important;
+}
+
+.text-fair {
+    color: #FFD371 !important;
+}
+
+.text-danger {
+    color: #ff5c6c !important;
+}
+
+.text-muted {
+    color: #bcc3d3 !important;
+}
+
+.text-warning {
+    color: #ff9041 !important;
+}
+
+.text-success {
+    color: #24d2b5 !important;
+}
+
+.text-info {
+    color: #20aee3 !important;
+}
+
+.text-inverse {
+    color: #2f3d4a !important;
+}
+
+.ms-auto {
+    margin-left: auto!important;
+}
+
+.me-auto {
+    margin-right: auto!important;
+}
+
+.ml-1 {
+    margin-left: 1rem!important;
+}
+
+ul.list-inline li {
+    display: inline-block;
+    padding: 0 8px;
+}
+
+.text-center {
+    text-align: center!important;
+}
+
+.list-inline {
+    padding-left: 0;
+    list-style: none;
+}
+
+@media screen and (max-width: 992px) {
+    .line-chart-main-div {
+        margin-bottom: 1rem;
+    }
+}
+.fs-2half {
+    font-size: 2.5rem;
+}

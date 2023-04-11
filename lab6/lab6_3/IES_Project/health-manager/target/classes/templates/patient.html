@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <meta name="description" content="">
+   <meta name="author" content="">
+   <title>Health Manager - Patient</title>
+   <!-- Bootstrap core CSS -->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+   <!-- Custom styles for this template -->
+   <link rel="stylesheet" type="text/css" href="/css/patient.css" />
+</head>
+
+<body>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+   <a class="navbar-brand" href="/">Health Manager</a>
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarDefault"
+           aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+   </button>
+   <div class="collapse navbar-collapse" id="navbarDefault">
+      <ul class="navbar-nav mr-auto">
+         <li class="nav-item">
+            <a class="nav-link" href="/patients">Patients</a>
+         </li>
+      </ul>
+   </div>
+</nav>
+<div class="container">
+   <table class="table mt-2">
+      <tr id="firstNameRow">
+         <td>First name</td>
+         <td id="firstName" class="editable" th:text="${patient.firstName}" />
+         <td>
+         </td>
+      <tr id="lastNameRow">
+         <td>Last name</td>
+         <td id="lastName" class="editable" th:text="${patient.lastName}" />
+         <td>
+         </td>
+      </tr>
+      <tr id="ageRow">
+         <td>Age</td>
+         <td id="age" class="editable" th:text="${patient.age}" />
+         <td>
+         </td>
+      </tr>
+      <tr id ="genderRow">
+         <td>Gender</td>
+         <td id="gender" th:text="${patient.gender}" />
+         <td>
+            <select id="selectGender">
+               <option>Male</option>
+               <option>Female</option>
+               <option>Other</option>
+            </select>
+         </td>
+         <td>
+         </td>
+      </tr>
+      <tr>
+         <td>Health state</td>
+         <span th:if="${patient.getLatestHealthState()} != null">
+               <span th:with="latestHealthState=${patient.getLatestHealthState()}">
+                  <td th:text="${latestHealthState}" />
+                  <td th:text='${#strings.replace(latestHealthState.getDateTime(), "T", " ")}' />
+               </span>
+            </span>
+         <span th:unless="${patient.getLatestHealthState()} != null">
+               <td style="text-align:center">No data</td>
+               <td></td>
+            </span>
+      </tr>
+      <tr>
+         <td>Heart rate</td>
+         <span th:if="${patient.getLatestHeartRate()} != null">
+               <span th:with="latestHeartRate=${patient.getLatestHeartRate()}">
+                  <td th:text="${latestHeartRate}" />
+                  <td th:text='${#strings.replace(latestHeartRate.getDateTime(), "T", " ")}' />
+               </span>
+            </span>
+         <span th:unless="${patient.getLatestHeartRate()} != null">
+               <td style="text-align:center">No data</td>
+               <td></td>
+            </span>
+      </tr>
+      <tr>
+         <td>Respiration rate</td>
+         <span th:if="${patient.getLatestRespirationRate()} != null">
+               <span th:with="latestRespirationRate=${patient.getLatestRespirationRate()}">
+                  <td th:text="${latestRespirationRate}" />
+                  <td th:text='${#strings.replace(latestRespirationRate.getDateTime(), "T", " ")}' />
+               </span>
+            </span>
+         <span th:unless="${patient.getLatestRespirationRate()} != null">
+               <td style="text-align:center">No data</td>
+               <td></td>
+            </span>
+      </tr>
+      <tr>
+         <td>Body Temperature</td>
+         <span th:if="${patient.getLatestBodyTemperature()} != null">
+               <span th:with="latestBodyTemperature=${patient.getLatestBodyTemperature()}">
+                  <td th:text="${latestBodyTemperature}" />
+                  <td th:text='${#strings.replace(latestBodyTemperature.getDateTime(), "T", " ")}' />
+               </span>
+            </span>
+         <span th:unless="${patient.getLatestBodyTemperature()} != null">
+               <td style="text-align:center">No data</td>
+               <td></td>
+            </span>
+      </tr>
+      <tr>
+         <td>Blood Pressure</td>
+         <span th:if="${patient.getLatestBloodPressure()} != null">
+               <span th:with="latestBloodPressure=${patient.getLatestBloodPressure()}">
+                  <td th:text="${latestBloodPressure}" />
+                  <td th:text='${#strings.replace(latestBloodPressure.getDateTime(), "T", " ")}' />
+               </span>
+            </span>
+         <span th:unless="${patient.getLatestBloodPressure()} != null">
+               <td style="text-align:center">No data</td>
+               <td></td>
+            </span>
+      </tr>
+      <tr>
+         <td>Oxygen Saturation</td>
+         <span th:if="${patient.getLatestOxygenSaturation()} != null">
+               <span th:with="latestOxygenSaturation=${patient.getLatestOxygenSaturation()}">
+                  <td th:text="${latestOxygenSaturation}" />
+                  <td th:text='${#strings.replace(latestOxygenSaturation.getDateTime(), "T", " ")}' />
+               </span>
+            </span>
+         <span th:unless="${patient.getLatestOxygenSaturation()} != null">
+               <td style="text-align:center">No data</td>
+               <td></td>
+            </span>
+      </tr>
+   </table>
+   <button type="button" class="btn btn-primary float-left" id="multiEdit">
+      Edit
+   </button>
+   <button type="button" class="btn btn-primary float-left" id="applyChangesOnly">
+      Apply changes only
+   </button>
+   <button type="button" class="btn btn-primary float-left" id="applyAll" style="margin-left:15px">
+      Apply all
+   </button>
+   <button type="button" class="btn btn-danger float-right" id="remove">
+      Remove patient
+   </button>
+</div>
+
+<div class="chart-container my-5">
+      <div class="col-lg-3 pb-5">
+         <h4 class="card-title">Date range:</h4>
+         <h6 class="card-title">Since</h6>
+         <input id="date-since" style="width: 100%;" type="datetime-local" step="1"/>
+         <h6 class="card-title mt-4">Until</h6>
+         <input id="date-until" style="width: 100%;" type="datetime-local" step="1"/>
+      </div>
+      <div class="col-lg-9">
+         <div class="card">
+            <div id="chartBar" class="card-body">
+               <canvas id="myChart" style="max-height: 600px;"></canvas>
+            </div>
+         </div>
+      </div>
+</div>
+
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"
+        integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+
+<script th:inline="javascript">
+   /*<![CDATA[*/
+   let patientId = /*[[${patient.id}]]*/ '';
+   /*]]>*/
+
+   $( document ).ready(function() {
+      $("#selectGender").hide();
+      $("#applyChangesOnly").hide();
+      $("#applyAll").hide();
+   });
+
+   let editing = false;
+   let firstNameBefore = "";
+   let lastNameBefore = "";
+   let ageBefore = -1;
+   let genderBefore = "";
+   function toggleEditing()
+   {
+      if (!editing) // Wasnt editing
+      {
+         firstNameBefore = $("#firstName").html();
+         lastNameBefore = $("#lastName").html();
+         ageBefore = parseInt($("#age").html());
+         genderBefore = $("#gender").html();
+         $("#multiEdit").hide();
+         $("#applyChangesOnly").show();
+         $("#applyAll").show();
+      }
+      else // Was editing
+      {
+         $("#applyAll").hide();
+         $("#applyChangesOnly").hide();
+         $("#multiEdit").show();
+      }
+      $('.editable').each(function(i, obj) {
+         $(obj).attr("contenteditable", !editing);
+      });
+      toggleEditingGender(!editing);
+      editing = !editing;
+   }
+
+   function toggleEditingGender(show)
+   {
+      if (show) // want to edit gender
+      {
+         $("#gender").hide();
+         $("#selectGender").show();
+         $("#selectGender> option").each(function() {
+            if (this.text == genderBefore)
+               $(this).attr("selected","selected");
+            else $(this).attr("selected",false);
+         });
+      }
+      else // finished editing gender
+      {
+         let genderSelected = $( "#selectGender option:selected" ).text();
+         $("#selectGender").hide();
+         $("#gender").show();
+         $("#gender").html(genderSelected);
+      }
+   }
+
+   $("#multiEdit").click(function () {
+              toggleEditing();
+           }
+   );
+
+   $("#applyChangesOnly").click(function () {
+              toggleEditing();
+              let json = {};
+
+              let firstName = $("#firstName").html();
+              if (firstName != firstNameBefore)
+                 json["firstName"] = firstName;
+
+              let lastName = $("#lastName").html();
+              if (lastName != lastNameBefore)
+                 json["lastName"] = lastName;
+
+              let age = parseInt($("#age").html());
+              console.log(age);
+              if (age != ageBefore)
+                 json["age"] = age;
+
+              let gender = $("#gender").html();
+              if (gender != genderBefore)
+                 json["gender"] = gender.toUpperCase();
+
+              apiCall("PUT", json);
+           }
+   );
+
+
+   $("#applyAll").click(function () {
+              toggleEditing();
+              let json = {};
+
+              let firstName = $("#firstName").html();
+              json["firstName"] = firstName;
+
+              let lastName = $("#lastName").html();
+              json["lastName"] = lastName;
+
+              let age = parseInt($("#age").html());
+              console.log(age);
+              json["age"] = age;
+
+              let gender = $("#gender").html();
+              json["gender"] = gender.toUpperCase();
+
+              apiCall("PUT", json);
+           }
+   );
+
+   $("#remove").click(function ()
+           {
+              let json = {"id":patientId};
+              apiCall("DELETE", json);
+           }
+   );
+
+   function apiCall(method, jsonObj)
+   {
+      if (patientId == '')
+         return;
+
+      if (!jsonObj.hasOwnProperty("id"))
+         jsonObj["id"] = patientId;
+
+      console.log("Api call " + method + " " + JSON.stringify(jsonObj));
+
+      // Patient API: localhost:8080/api/patients/{id}
+      let url = window.location.href.split("/");
+      let domain = url[0] + "//" + url[2] + "/";
+      url = domain + "api/v1/patients/" + patientId;
+
+      fetch(url,
+              {
+                 method: method,
+                 headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                 },
+                 body: JSON.stringify(jsonObj)
+              })
+              .then(function(response)
+              {
+                 if (method == "DELETE")
+                    window.location.href = domain + "patients";
+                 return response;
+              })
+              .then(response => response.json())
+              .then(response => console.log(JSON.stringify(response)));
+
+   }
+
+
+</script>
+
+<script th:inline="javascript">
+
+   (function(){
+      if (typeof Object.defineProperty === 'function'){
+         try{Object.defineProperty(Array.prototype,'sortBy',{value:sb}); }catch(e){}
+      }
+      if (!Array.prototype.sortBy) Array.prototype.sortBy = sb;
+
+      function sb(f){
+         let i;
+         for (i = this.length; i;){
+            const o = this[--i];
+            this[i] = [].concat(f.call(o,o,i),o);
+         }
+         this.sort(function(a,b){
+            let i = 0, len = a.length;
+            for (; i<len; ++i){
+               if (a[i]!==b[i]) return a[i]<b[i]?-1:1;
+            }
+            return 0;
+         });
+         for (i = this.length; i;){
+            this[--i]=this[i][this[i].length-1];
+         }
+         return this;
+      }
+   })();
+
+   $(document).ready(async () => {
+
+      async function fetchAsync(url) {
+         let response = await fetch(url);
+         return await response.json();
+      }
+
+      /*<![CDATA[*/
+      const patientID = /*[[${patient.getId()}]]*/ null
+      /*]]>*/
+
+      const getData = async (start, end) => {
+         let hrData = await fetchAsync(`${window.location.origin}/api/v1/patients/${patientID}/heartRates?sortBy=dateTime&startDateTime=${start}&endDateTime=${end}`)
+         let btData = await fetchAsync(`${window.location.origin}/api/v1/patients/${patientID}/bodyTemperatures?sortBy=dateTime&startDateTime=${start}&endDateTime=${end}`)
+         let bpData = await fetchAsync(`${window.location.origin}/api/v1/patients/${patientID}/bloodPressures?sortBy=dateTime&startDateTime=${start}&endDateTime=${end}`)
+         let rrData = await fetchAsync(`${window.location.origin}/api/v1/patients/${patientID}/respirationRates?sortBy=dateTime&startDateTime=${start}&endDateTime=${end}`)
+         let osData = await fetchAsync(`${window.location.origin}/api/v1/patients/${patientID}/oxygenSaturations?sortBy=dateTime&startDateTime=${start}&endDateTime=${end}`)
+         return [hrData, btData, bpData, rrData, osData]
+      }
+
+      const getUniqueTimes = (data) => {
+         const uniqueTimes = new Set();
+
+         data.forEach(attr => attr.map(obj => obj.dateTime).forEach(uniqueTimes.add, uniqueTimes))
+
+         return Array.from(uniqueTimes).sort();
+      }
+
+      const getFirstAndLastDate = (data) => {
+
+         const times = getUniqueTimes(data)
+
+         return [times.at(0), times.at(-1), times]
+      }
+
+      const getSecondsDifference = (first, last) => {
+         return (Date.parse(last) - Date.parse(first)) / 1000
+      }
+
+      const getValues = (data) => {
+         return data.map(arr => arr.map(obj =>
+         {
+            let values = Object.values(obj)
+            return values.length === 4? values.slice(2) : values.slice(2, -1)
+         }))
+      }
+
+      const filterData = async (start, end) => {
+
+         let data = await getData(start, end)
+         const [first, last, times] = getFirstAndLastDate(data)
+         const values = getValues(data)
+
+         const seconds = getSecondsDifference(first, last)
+
+         const QUARTER = 15
+         const MINUTE = 60
+         const QUARTER_HOUR = 800
+         const HOUR = 3600
+         const DAY = 86400
+         const MONTH = 2628000
+         const YEAR = 31536000
+
+         if (seconds > YEAR)
+            return aggregateData(times, values, 7)
+         if (seconds > MONTH)
+            return aggregateData(times, values, 6)
+         if (seconds > DAY)
+            return aggregateData(times, values, 5)
+         if (seconds > HOUR)
+            return aggregateData(times, values, 4)
+         if (seconds > QUARTER_HOUR)
+            return aggregateData(times, values, 3)
+         if (seconds > MINUTE)
+            return aggregateData(times, values, 2)
+         if (seconds > QUARTER)
+            return aggregateData(times, values, 1)
+         return aggregateData(times, values, 0)
+      }
+
+      const isBetween = (start, dateString, end) => {
+         return dateString >= start && dateString < end
+      }
+      const isLater = (dateString1, dateString2) => {
+         return dateString1 >= dateString2
+      }
+
+
+      const dateToJSON = (date) => {
+         return date.toJSON().replace(/\.\d+Z/, '');
+      }
+
+      const floorDate = (date, format) => {
+
+         const F_SECOND = 0
+         const F_QUARTER = 1
+         const F_MINUTE = 2
+         const F_QUARTER_HOUR = 3
+         const F_HOUR = 4
+         const F_DAY = 5
+         const F_MONTH = 6
+         const F_YEAR = 7
+
+         switch (format) {
+            case F_SECOND:
+               return date
+            case F_QUARTER: {
+               let thisDate = new Date(date)
+               let dateSeconds = thisDate.getSeconds()
+               let newSeconds = dateSeconds - (dateSeconds % 15)
+               thisDate.setSeconds(newSeconds, 0)
+               return dateToJSON(thisDate);
+            }
+            case F_MINUTE: {
+               let thisDate = new Date(date)
+               thisDate.setSeconds(0, 0)
+               return dateToJSON(thisDate);
+            }
+            case F_QUARTER_HOUR: {
+               let thisDate = new Date(date)
+               let dateMinutes = thisDate.getMinutes()
+               let newMinutes = dateMinutes - (dateMinutes % 15)
+               thisDate.setMinutes(newMinutes, 0, 0)
+               return dateToJSON(thisDate);
+            }
+            case F_HOUR: {
+               let thisDate = new Date(date)
+               thisDate.setMinutes(0, 0, 0)
+               return dateToJSON(thisDate);
+            }
+            case F_DAY: {
+               let thisDate = new Date(date)
+               thisDate.setHours(0, 0, 0, 0)
+               return dateToJSON(thisDate);
+            }
+            case F_MONTH: {
+               let thisDate = new Date(date)
+               thisDate.setHours(0, 0, 0, 0);
+               thisDate.setDate(1);
+               return dateToJSON(thisDate);
+            }
+            case F_YEAR: {
+               let thisDate = new Date(date)
+               thisDate.setHours(0, 0, 0, 0)
+               thisDate.setMonth(0, 1)
+               return dateToJSON(thisDate);
+            }
+         }
+      }
+
+      let LOWEST_FREQUENCY = 1
+
+      const aggregateData = (times, values, format) => {
+         const increments = [LOWEST_FREQUENCY, 15, 60, 800, 3600, 86400, 2628000, 31536000]
+
+         let increment = increments[format]
+
+         let firstDate = floorDate(times[0], format)
+
+         let newTimes = [firstDate]
+
+         times.forEach(dateTime => {
+            let newJsonDate = floorDate(dateTime, format)
+            if (getSecondsDifference(newTimes.at(-1), newJsonDate) >= increment) {
+               newTimes.push(newJsonDate)
+            }
+         })
+
+         let tempValues = []
+
+         values.forEach(attr => {
+
+            let attrStack = []
+            let pointer = 0
+
+            attr.forEach(value => {
+
+               let [dateTime, ...rest] = value
+
+               // just to ease things
+               if (rest.length === 1)
+                  rest = rest[0]
+
+               if (newTimes?.[pointer + 1] === undefined) {
+                  if (attrStack?.[pointer] === undefined)
+                     attrStack[pointer] = []
+                  attrStack[pointer].push(rest)
+               }
+               else if (isBetween(newTimes[pointer], dateTime, newTimes[pointer + 1])) {
+                  if (attrStack?.[pointer] === undefined)
+                     attrStack[pointer] = []
+                  attrStack[pointer].push(rest)
+               }
+               else {
+                  pointer++
+                  while (newTimes[pointer + 1] !== undefined && isLater(dateTime, newTimes[pointer + 1]) && pointer++){}
+                  if (attrStack?.[pointer] === undefined)
+                     attrStack[pointer] = []
+                  attrStack[pointer].push(rest)
+               }
+            })
+
+            tempValues.push(attrStack)
+         })
+
+         let systolic = tempValues[2].map(arr => arr.map(values => values[0]))
+         let diastolic = tempValues[2].map(arr => arr.map(values => values[1]))
+
+
+         tempValues.splice(2, 1)
+
+         tempValues.push(systolic)
+         tempValues.push(diastolic)
+
+         let newValues = tempValues.map(attr => attr.map(all => all.reduce((a, b) => a + b, 0) / all.length))
+
+         return [newTimes, newValues]
+      }
+
+      const SPANGAPS = false
+
+      const createGraph = (data) => {
+
+         return new Chart("myChart", {
+            type: "line",
+            data: {
+               labels: data[0],
+               datasets: [{
+                  label: "Heart Rate",
+                  data: data[1][0],
+                  borderColor: "red",
+                  backgroundColor: "rgba(255, 0, 0, 0.5)",
+                  fill: false,
+                  spanGaps: SPANGAPS,
+               }, {
+                  label: "Respiration Rate",
+                  data: data[1][2],
+                  borderColor: "#228ebd",
+                  backgroundColor: "rgba(34, 142, 189, 0.5)",
+                  fill: false,
+                  spanGaps: SPANGAPS,
+               }, {
+                  label: "Body Temperature",
+                  data: data[1][1],
+                  borderColor: "#bd7c22",
+                  backgroundColor: "rgba(189, 124, 34, 0.5)",
+                  fill: false,
+                  spanGaps: SPANGAPS,
+               }, {
+                  label: "Blood Pressure Systolic",
+                  data: data[1][4],
+                  borderColor: "#3922bd",
+                  backgroundColor: "rgba(57, 34, 189, 0.5)",
+                  fill: false,
+                  spanGaps: SPANGAPS,
+               }, {
+                  label: "Blood Pressure Diastolic",
+                  data: data[1][5],
+                  borderColor: "#29426d",
+                  backgroundColor: "rgba(41, 66, 109, 0.5)",
+                  fill: false,
+                  spanGaps: SPANGAPS,
+               }, {
+                  label: "Oxygen Saturation",
+                  data: data[1][3],
+                  borderColor: "#2e8705",
+                  backgroundColor: "rgba(46, 135, 5, 0.5)",
+                  fill: false,
+                  spanGaps: SPANGAPS,
+               }]
+            },
+            options: {
+               responsive: true,
+               scaleShowValues: true,
+               scales: {
+                  x: {
+                     border: {
+                        display: true
+                     },
+                     grid: {
+                        display: true,
+                        drawOnChartArea: true,
+                        drawTicks: true,
+                     },
+                     ticks: {
+                        autoSkip: false
+                     },
+                     title: {
+                        display: true,
+                        text: 'Date'
+                     }
+                  },
+                  y: {
+                     border: {
+                        display: false
+                     },
+                     title: {
+                        display: true,
+                        text: 'Values'
+                     }
+                  },
+               }
+            }
+         });
+      };
+
+
+      let initialData = await filterData("", "")
+      let initialDates = initialData[0]
+
+      let dateSince = initialDates.at(0)
+      let dateUntil = initialDates.at(-1)
+
+      $('#date-since').attr('value', dateSince)
+      $('#date-until').attr('value', dateUntil)
+
+      const chart = createGraph(initialData);
+
+      $("#date-until, #date-since").on('change', async function (event) {
+         let start = dateToJSON(new Date($("#date-since").val()))
+         let end = dateToJSON(new Date($("#date-until").val()))
+
+         let initialData = await filterData(start, end)
+
+         $('#myChart').remove();
+         $('#chartBar').append('<canvas id="myChart"></canvas>');
+
+         createGraph(initialData)
+      })
+   })
+
+</script>
+</body>
+<div th:insert="alerts :: alertsfragment"></div>
+</html>

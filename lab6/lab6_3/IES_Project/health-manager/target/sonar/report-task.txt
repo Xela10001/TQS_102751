@@ -1,0 +1,6 @@
+projectKey=ies
+serverUrl=http://127.0.0.1:9012
+serverVersion=9.9.0.65466
+dashboardUrl=http://127.0.0.1:9012/dashboard?id=ies
+ceTaskId=AYcZUlh9Ky-z7He2SC_v
+ceTaskUrl=http://127.0.0.1:9012/api/ce/task?id=AYcZUlh9Ky-z7He2SC_v

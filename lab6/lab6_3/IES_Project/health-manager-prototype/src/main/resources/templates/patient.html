@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <meta name="description" content="">
+   <meta name="author" content="">
+   <title>Health Manager - Patient</title>
+   <!-- Bootstrap core CSS -->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+   <!-- Custom styles for this template -->
+   <link rel="stylesheet" type="text/css" href="/css/patient.css" />
+</head>
+
+<body>
+   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="/">Health Manager</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarDefault"
+         aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarDefault">
+         <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+               <a class="nav-link" href="/patients">Patients</a>
+            </li>
+         </ul>
+      </div>
+   </nav>
+   <div class="container">
+      <table class="table mt-2">
+         <tr>
+            <td>First name</td>
+            <td class="editable" th:text="${patient.firstName}" />
+            <td><button type="button" class="btn btn-primary float-right" onclick="editField(this);">Edit</button></td>
+         </tr>
+         <tr>
+            <td>Last name</td>
+            <td class="editable" th:text="${patient.lastName}" />
+            <td><button type="button" class="btn btn-primary float-right" onclick="editField(this);">Edit</button></td>
+         </tr>
+         <tr>
+            <td>Age</td>
+            <td class="editable" th:text="${patient.age}" />
+            <td><button type="button" class="btn btn-primary float-right" onclick="editField(this);">Edit</button></td>
+         </tr>
+         <tr>
+            <td>Gender</td>
+            <td class="editable" th:text="${patient.gender}" />
+            <td><button type="button" class="btn btn-primary float-right" onclick="editField(this);">Edit</button></td>
+         </tr>
+         <tr>
+            <td>Health state</td>
+            <td th:text="${patient.healthState}" />
+         </tr>
+         <tr>
+            <td>Heart rate</td>
+            <td th:text="${patient.heartRate}" />
+         </tr>
+         <tr>
+            <td>Respiration rate</td>
+            <td th:text="${patient.respirationRate}" />
+         </tr>
+         <tr>
+            <td>Body Temperature</td>
+            <td th:text="${patient.bodyTemperature}" />
+         </tr>
+         <tr>
+            <td>Blood Pressure</td>
+            <td th:text="${patient.bloodPressure}" />
+         </tr>
+         <tr>
+            <td>Oxygen Saturation</td>
+            <td th:text="${patient.oxygenSaturation}" />
+         </tr>
+      </table>
+      <button type="button" class="btn btn-primary float-left" id="multiEdit">Edit</button>
+      <button type="button" class="btn btn-danger float-right" id="remove">Remove patient</button>
+   </div>
+
+   <div class="container my-5">
+      <div class="row">
+         <div class="col-lg-3 pb-5">
+            <h4 class="card-title">Date range:</h4>
+            <h6 class="card-title">Since</h6>
+            <input id="date-since" style="width: 100%;" type="datetime-local"/>
+            <h6 class="card-title mt-4">Until</h6>
+            <input id="date-until" style="width: 100%;" type="datetime-local"/>
+         </div>
+         <div class="col-lg-9">
+            <div class="card">
+               <div id="chartBar" class="card-body">
+                  <canvas id="myChart" style="max-height: 600px;"></canvas>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!-- Placed at the end of the document so the pages load faster -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"
+      integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"></script>
+   <script th:inline="javascript">
+      /*<![CDATA[*/
+
+      (function(){
+         if (typeof Object.defineProperty === 'function'){
+            try{Object.defineProperty(Array.prototype,'sortBy',{value:sb}); }catch(e){}
+         }
+         if (!Array.prototype.sortBy) Array.prototype.sortBy = sb;
+
+         function sb(f){
+            let i;
+            for (i = this.length; i;){
+               const o = this[--i];
+               this[i] = [].concat(f.call(o,o,i),o);
+            }
+            this.sort(function(a,b){
+               for (var i=0,len=a.length;i<len;++i){
+                  if (a[i]!==b[i]) return a[i]<b[i]?-1:1;
+               }
+               return 0;
+            });
+            for (i = this.length; i;){
+               this[--i]=this[i][this[i].length-1];
+            }
+            return this;
+         }
+      })();
+
+
+      $(document).ready(() => {
+
+         const patient_data = /*[[${patientHeartbeats}]]*/ null;
+
+         const createGraph = (filtered_dates) => {
+
+            function values(keys, index) {
+               return keys.map(function (v) {
+                  return patient_data[v][index];
+               })
+            }
+
+            return new Chart("myChart", {
+               type: "line",
+               data: {
+                  labels: filtered_dates,
+                  datasets: [{
+                     label: "Heart Rate",
+                     data: values(filtered_dates, 0),
+                     borderColor: "red",
+                     fill: false
+                  }, {
+                     label: "Respiration Rate",
+                     data: values(filtered_dates, 1),
+                     borderColor: "#228ebd",
+                     fill: false
+                  }, {
+                     label: "Body Temperature",
+                     data: values(filtered_dates, 2),
+                     borderColor: "#bd7c22",
+                     fill: false
+                  }, {
+                     label: "Blood Pressure",
+                     data: values(filtered_dates, 3),
+                     borderColor: "#3922bd",
+                     fill: false
+                  }, {
+                     label: "Oxygen Saturation",
+                     data: values(filtered_dates, 4),
+                     borderColor: "#2e8705",
+                     fill: false
+                  },
+                  ]
+               },
+               options: {
+                  scaleShowValues: true,
+                  scales: {
+                     x: {
+                        ticks: {
+                           autoSkip: false
+                        },
+                        title: {
+                           display: true,
+                           text: 'Date'
+                        }
+                     },
+                     y: {
+                        title: {
+                           display: true,
+                           text: 'Values'
+                        }
+                     }
+                  }
+               }
+            });
+         };
+
+         const initial_dates = Object.keys(patient_data).sortBy(function (o) {
+            return new Date(o)
+         })
+
+         $('#date-since').attr('value', initial_dates[0])
+         $('#date-until').attr('value', initial_dates[initial_dates.length - 1])
+
+         const chart = createGraph(initial_dates);
+
+         const dateCheck = (from, to ,check) => {
+
+            let fDate, lDate, cDate;
+            fDate = Date.parse(from);
+            lDate = Date.parse(to);
+            cDate = Date.parse(check);
+
+            return (cDate <= lDate && cDate >= fDate);
+
+         }
+
+         const getDatesInRange = (startDate, endDate) => {
+            return initial_dates.filter(date => dateCheck(startDate, endDate, date));
+         }
+
+         $("#date-until, #date-since").on('change', function (event) {
+            let start = $("#date-since").val()
+            let end = $("#date-until").val()
+
+            const dates = getDatesInRange(start, end);
+
+            $('#myChart').remove();
+            $('#chartBar').append('<canvas id="myChart"></canvas>');
+
+            console.log(dates)
+            createGraph(dates)
+         })
+      })
+
+      /*]]>*/
+   </script>
+</body>
+
+<script>
+   var editing = false;
+   $("#multiEdit").click(function () {
+      $(".editable").attr("contenteditable", !editing);
+      editing = !editing;
+   }
+   );
+
+   function editField(elem) {
+      var elemToEdit = $(elem).parent().parent().find("td:eq(1)");
+      if (elemToEdit.attr("contenteditable") == "false")
+         elemToEdit.attr("contenteditable", true);
+      else
+         elemToEdit.attr("contenteditable", false);
+   }
+</script>
+
+</html>

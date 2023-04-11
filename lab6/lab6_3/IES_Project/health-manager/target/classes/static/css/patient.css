@@ -1,0 +1,105 @@
+body {
+    padding-top: 50px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+td
+{
+    vertical-align: middle !important; 
+}
+
+td:first-child {
+    font-weight: bold;
+    text-align:left;
+}
+
+td:nth-child(2)
+{
+    text-align:center;
+}
+
+
+#genderRow td:nth-child(3)
+{
+    text-align:center;
+}
+
+
+
+td:last-child
+{
+    text-align:right;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.chart-container {
+    width: 90%;
+    margin: auto;
+    display: inline-flex;
+}
+
+@media screen and (max-width: 1000px) {
+    .chart-container {
+        display: block;
+    }
+}
+
+.table td, .table th {
+    border: none;
+}
+
+.table td[contenteditable='true'] {
+    background-color: #eceff1;
+}
+
+.table td:nth-child(2) {
+    text-align: center!important;
+}
+
+.table tr:first-of-type {
+    border: none;
+}
+
+.table tr {
+    border-top: 1px solid #dee2e6
+}

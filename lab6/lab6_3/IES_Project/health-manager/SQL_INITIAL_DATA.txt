@@ -1,0 +1,56 @@
+ -- use db
+USE HealthManager;
+
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE HealthManager.blood_pressures;
+DROP TABLE HealthManager.body_temperatures;
+DROP TABLE HealthManager.health_states;
+DROP TABLE HealthManager.heart_rates;
+DROP TABLE HealthManager.hibernate_sequence;
+DROP TABLE HealthManager.oxygen_saturations;
+DROP TABLE HealthManager.patients;
+DROP TABLE HealthManager.respiration_rates;
+SET FOREIGN_KEY_CHECKS = 1;
+
+-- Delete data in all tables
+ -- use db
+USE HealthManager;
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE HealthManager.blood_pressures;
+TRUNCATE TABLE HealthManager.body_temperatures;
+TRUNCATE TABLE HealthManager.health_states;
+TRUNCATE TABLE HealthManager.heart_rates;
+--TRUNCATE TABLE HealthManager.hibernate_sequence;
+TRUNCATE TABLE HealthManager.oxygen_saturations;
+--TRUNCATE TABLE HealthManager.patients;
+TRUNCATE TABLE HealthManager.respiration_rates;
+SET FOREIGN_KEY_CHECKS = 1;
+
+CREATE TABLE hibernate_sequence(next_val bigint(20) PRIMARY KEY);
+INSERT INTO hibernate_sequence (next_val) VALUES (100);
+
+-- Insert initial patients
+-- datetime in MySql: YYYY-MM-DD hh:mm:ss
+ -- use db
+USE HealthManager;
+INSERT INTO patients (id, first_name, last_name, age, gender)
+VALUES (1, "Manuel", "Ferreira", 56, "MALE");
+INSERT INTO patients (id, first_name, last_name, age, gender)
+VALUES (2, "Joana", "Matias", 71, "FEMALE");
+INSERT INTO patients (id, first_name, last_name, age, gender)
+VALUES (3, "Joao", "Dinis", 49, "MALE");
+INSERT INTO patients (id, first_name, last_name, age, gender)
+VALUES (4, "Simao", "Matos", 63, "MALE");
+INSERT INTO patients (id, first_name, last_name, age, gender)
+VALUES (5, "Laura", "Dias", 82, "FEMALE");
+INSERT INTO patients (id, first_name, last_name, age, gender)
+VALUES (6, "Diana", "Jesus", 58, "FEMALE");
+INSERT INTO patients (id, first_name, last_name, age, gender)
+VALUES (7, "Luis", "Ferreira", 78, "MALE");
+INSERT INTO patients (id, first_name, last_name, age, gender)
+VALUES (8, "Carlos", "Santos", 49, "MALE");
+INSERT INTO patients (id, first_name, last_name, age, gender)
+VALUES (9, "Clara", "Matos", 65, "FEMALE");
+INSERT INTO patients (id, first_name, last_name, age, gender)
+VALUES (10, "Jorge", "Alberto", 55, "MALE");
+

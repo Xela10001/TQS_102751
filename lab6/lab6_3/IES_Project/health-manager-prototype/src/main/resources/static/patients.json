@@ -1,0 +1,65 @@
+[
+    {
+        "id": 1,
+        "firstName": "Chris",
+        "lastName": "Wright",
+        "age": 67,
+        "gender": "male"
+    },
+    {
+        "id": 2,
+        "firstName": "Rudy",
+        "lastName": "Bush",
+        "age": 48,
+        "gender": "female"
+    },
+    {
+        "id": 3,
+        "firstName": "Xavier",
+        "lastName": "Klein",
+        "age": 35,
+        "gender": "male"
+    },
+    {
+        "id": 4,
+        "firstName": "Steven",
+        "lastName": "Mckay",
+        "age": 82,
+        "gender": "male"
+    },
+    {
+        "id": 5,
+        "firstName": "Emilie",
+        "lastName": "Jenkins",
+        "age": 65,
+        "gender": "female"
+    },
+    {
+        "id": 6,
+        "firstName": "Sarah",
+        "lastName": "Siz",
+        "age": 52,
+        "gender": "female"
+    },
+    {
+        "id": 7,
+        "firstName": "John",
+        "lastName": "Movado",
+        "age": 41,
+        "gender": "male"
+    },
+    {
+        "id": 8,
+        "firstName": "Richard",
+        "lastName": "Steph",
+        "age": 88,
+        "gender": "male"
+    },
+    {
+        "id": 9,
+        "firstName": "David",
+        "lastName": "Lim",
+        "age": 61,
+        "gender": "male"
+    }
+]

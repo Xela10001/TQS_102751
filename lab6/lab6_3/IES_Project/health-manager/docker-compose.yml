@@ -1,0 +1,51 @@
+version: '3'
+services:
+  MySqlHealthManager:
+    container_name: MySqlHealthManager
+    image: mysql/mysql-server:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootPw123
+      - MYSQL_DATABASE=HealthManager
+      - MYSQL_USER=user1
+      - MYSQL_PASSWORD=user1pw
+    ports:
+      - '33060:3306'
+    restart: unless-stopped
+    volumes:
+      - db:/var/lib/mysql
+  rabbitmq:
+    container_name: rabbitmq
+    image: 'rabbitmq:management'
+    environment:
+      - RABBITMQ_USERNAME=guest
+      - RABBITMQ_PASSWORD=guest
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_HOST=rabbitmq
+    ports:
+      - '15672:15672'
+      - '5672:5672'
+    expose:
+      - '5672'
+    restart: unless-stopped
+  app:
+    container_name: app
+    build:
+      context: .
+    ports:
+      - '8080:8080'
+    depends_on:
+      - MySqlHealthManager
+      - rabbitmq
+    environment:
+      - RABBITMQ_USERNAME=guest
+      - RABBITMQ_PASSWORD=guest
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_HOST=rabbitmq
+      - DATABASE_HOST=MySqlHealthManager
+      - DATABASE_USER=user1
+      - DATABASE_PASSWORD=user1pw
+      - DATABASE_NAME=HealthManager
+      - DATABASE_PORT=3306
+    restart: unless-stopped
+volumes:
+  db:

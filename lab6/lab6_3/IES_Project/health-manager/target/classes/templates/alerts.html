@@ -1,0 +1,150 @@
+
+<div th:fragment="alertsfragment" id="alertsfragment">
+<style>
+
+.alert h3 {
+  overflow-wrap: break-word;
+  inline-size: 85%;
+  padding-right: 20px;
+  font-size: 1.05rem!important;
+  font-weight: bold!important;
+  margin-block-start: .75em!important;
+  margin-block-end: .75em!important;
+  margin-inline-start: 0 !important;
+  margin-inline-end: 0 !important;
+  font-family: Quicksand,sans-serif, -apple-system, BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+.alert-holder {
+    right: 0;
+    top: 70px;
+    position: fixed;
+    width: 33%;
+}
+
+.alert-container {
+    width: 100%;
+    display: inline-flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.alert {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 5px;
+  right: 20px;
+  padding: 2px 10px 2px 12px;
+  position: relative;
+  border-radius: 5px;
+  box-shadow: 0 0 15px 5px #ccc;
+  margin-bottom: 0.3rem!important;
+}
+
+.alert .close, .alert .view-patient {
+    width: 30px;
+    height: 30px;
+    opacity: 0.5;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 50%;
+    text-align: center;
+    cursor: pointer;
+}
+
+.view-patient {
+    margin-right: 8px;
+}
+
+.alert .close::after {
+    content: '\00D7';
+}
+
+.alert .view-patient::after {
+    font: var(--fa-font-solid);
+    vertical-align: middle;
+    content: '\f06e';
+}
+
+.danger-alert {
+  background-color: #f7a7a3;
+  border-left: 5px solid #8f130c;
+}
+
+.danger-alert .close {
+  border-color: #8f130c;
+  color: #8f130c;
+}
+
+.danger-alert .view-patient {
+    border-color: #8f130c;
+    color: initial;
+    text-decoration: none;
+}
+
+.danger-alert .close:hover, .danger-alert .view-patient:hover {
+    opacity: .75;
+    transition: 0.1s;
+}
+
+.danger-btn-group {
+    display: flex;
+}
+
+@media (max-width: 1123px) {
+    .danger-alert {
+        width: 40%;
+    }
+}
+
+@media (max-width: 1123px) {
+    .danger-alert {
+        width: 40%;
+    }
+}
+
+@media (max-width: 768px) {
+    .danger-alert {
+        width: 50%;
+    }
+}
+
+@media (max-width: 594px) {
+    .danger-alert {
+        width: 75%;
+    }
+}
+
+@media (max-width: 595px) {
+    .danger-alert {
+        width: 75%;
+    }
+}
+
+@media (max-width: 424px) {
+    .danger-alert {
+        right: 0;
+        width: 96%;
+    }
+    .alert-container {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 217px) {
+    .alert h3 {
+        font-size: 1rem!important;
+    }
+}
+
+</style>
+    <div class="alert-holder"></div>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/alerts.js}"></script>
+
+</div>
